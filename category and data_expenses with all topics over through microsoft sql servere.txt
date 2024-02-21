@@ -1,0 +1,364 @@
+select * from data_expenses
+find the unique categories in the data
+
+select distinct CategoryID FROM data_expenses
+
+Show the purchase which had the highest cost
+
+select Company,Cost from data_expenses
+order by Cost desc
+
+Query to show only first 20 rows of data
+
+
+select top 20 *
+from data_expenses
+
+show the unique company names where money has been spent
+select distinct Company,Cost from data_expenses
+order by Cost desc
+
+How many unique days has money been spent in each month
+with cte as(
+select day(date) as days ,month(date) AS monthly,Cost  from data_expenses)
+select count (distinct days),monthly,Cost
+from cte
+group by monthly,Cost
+order  by Cost desc
+
+
+For the above question show it in descending order 
+select Cost from data_expenses
+order by Cost desc
+
+
+show only data of category id 3,4
+select CategoryID FROM data_expenses
+
+where CategoryId in(3,4)
+where CategoryId  between 3 and 4
+
+
+What is highest categoryid of expense in march
+
+select CategoryID,month(Date) as monthly ,Cost from 
+data_expenses
+where MONTH(Date)=3
+order by cost desc
+
+ 
+ 	
+Which store had the highest expense in may
+
+select * from data_expenses
+select * from categories
+
+
+select Company, month(Date) as monthly ,Cost from 
+data_expenses
+where MONTH(Date)=5
+order by cost desc
+
+show categories with expense more than 150 for the month of april
+
+
+select categoryID,month(date) as monthly 
+from data_expenses
+
+where month(date) =4 and Cost>150
+
+
+Which category had the lowest total number in february
+select categoryID ,sum(cost) as total_sum ,month(date) as monthly
+from data_expenses
+where month(date)=2
+group by CategoryID,month(date)
+order by total_sum asc
+
+select a.categoryID ,sum(a.cost) as total_sum ,month(a.date) as monthly
+from data_expenses a
+inner join categories b on  a.CategoryID=b.CategoryID
+where month(a.date)=2
+group by a.CategoryID,month(a.date)
+order by total_sum asc
+
+SELECT * FROM categories
+select * from data_expenses
+
+Show the data only where shop name contains the letter w
+select categoryID 
+SELECT * FROM data_expenses
+select Company,Cost from
+data_expenses
+where Company like 'w%'
+
+find a way to get the category based on category ID
+select * from categories
+select CategoryID,Category from categories
+select a.*,b.* from data_expenses a
+inner join categories  b on a.CategoryID=b.CategoryID
+
+
+ 
+ 	
+Is there any category ID not present in the data table
+
+
+select a.*,b.* from 
+categories a
+left join data_expenses b on a.categoryId=b.categoryID
+
+SELECT categoryID from categories
+where categoryID NOT IN(select categoryID  FROM data_expenses)
+
+show categories with expense more than 150 for the month of april
+
+select b.category,sum(a.cost) as total_cost 
+from data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID AND month(a.Date)=4
+group by b.category
+HAVING SUM(a.cost)>150
+
+select b.category,a.cost from data_expenses a
+inner join categories b  on a.CategoryID=b.categoryID and month(a.Date)=4
+where a.cost>150
+
+Any patterns in ticket expenses over time
+
+
+select month(a.date) as montly,sum(a.cost)
+from categories b
+inner join data_expenses a on b.categoryID=a.categoryID
+
+where category like '%ticket%'
+GROUP BY month(a.date)
+
+ 
+ 	
+Which restaurant has received the maximum orders based on days
+select * from categories
+with cte as(
+select datepart(day,a.Date) as days,a.company 
+from data_expenses a
+inner join categories b on a.CategoryID=b.categoryID
+WHERE b.category='Restaurant')
+
+select company, count(distinct days) as whole_days
+from cte
+group by company
+order by whole_days desc
+
+
+ 
+ 	
+Calculate average spend per day for restaurants
+select avg(a.cost)/count(date)
+from data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID
+where b.category='Restaurant'
+
+which day of week saw the highest spend in may
+select datepart(weekday,date),sum(cost) from 
+data_expenses
+where datepart(month,date)=5
+group by datepart(weekday,date)
+order by sum(cost) desc
+
+
+calculate total cost for grocery per month and show month in year and month format separated by hyphen
+
+select concat(year(date) ,'-',month(date)) as yearly,sum(cost)
+from data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID
+WHERE b.category='grocery'
+group by year(date), month(date)
+
+
+Calculate total spend for shops starting with capital letter R
+select company ,sum(cost) as total_Spend
+from data_expenses
+where company like 'R%'
+group by company
+order by total_Spend desc
+
+ 
+ 	
+How many unique companies exist in the shopping category
+
+select distinct Company as companies
+from data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID
+WHERE b.Category='Shopping'
+
+What is the spending pattern at Rewe monthwise and any insights
+select company,sum(cost) as total_sales ,month(date) as monthly from 
+data_expenses
+where company='Rewe'
+group by month(date),company
+
+select * from data_expenses
+
+Any trends with respect to eating at dominos restaurant
+
+select company ,concat(year(date),'-' ,month(date)) as trends_year_month,sum(Cost) as total_cost
+from  data_expenses a
+inner join categories b on a.CategoryID=b.categoryID
+where b.category='Dominos'
+GROUP BY year(date),month(date),company
+
+select * from categories
+
+
+Is there any month where grocery expense is bit different
+select month(date),sum(cost)
+from  data_expenses a
+inner join categories b on a.CategoryID=b.categoryID
+where category ='Grocery'
+group by month(date)
+
+ 
+ 	
+Show only the company with highest spend in each category for april
+
+select a.Company,sum(a.Cost) as total_amount,b.Category
+from  data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID
+where month(a.date)=4
+Group by a.Company,b.Category
+order by total_amount desc
+
+
+select company,categoryID ,SUM(COST) as total_amount
+from data_expenses
+WHERE MONTH(DATE)=4
+group by company,categoryID
+
+
+calculate % change in total cost for each month & find the month with highest % change
+with cte as (
+select sum(cost) as total_amount,month(date) as monthly_sales from data_expenses
+group by month(date)),
+
+cte1 as (
+select total_amount,monthly_sales,lag(total_amount) over(order by monthly_sales) as previous_months
+from cte)
+
+select monthly_sales,total_amount,previous_months,coalesce(((total_amount-previous_months)/previous_months)*100,0)
+from cte1
+
+do the same as above question but only for restaurant category
+
+with cte as (
+select sum(cost) as total_amount,month(date) as monthly_sales from data_expenses
+where categoryID=4
+group by month(date)),
+
+cte1 as (
+select total_amount,monthly_sales,lag(total_amount) over(order by monthly_sales) as previous_months
+from cte)
+
+select monthly_sales,total_amount,previous_months,coalesce(((total_amount-previous_months)/previous_months)*100,0)
+from cte1
+
+
+ 
+ 	
+find the date with highest number of unique categories where money was spent
+
+select a.date,count(distinct b.category) as unique_categories
+
+
+
+from  data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID
+group by a.date
+order by count(distinct b.category)  desc 
+
+
+select date,count(distinct categoryID) FROM data_expenses
+group by date
+order by count(distinct categoryID) desc
+
+ 
+ 	
+Use case statement to categorise restaurants as Indian vs non indian based on name and show total cost for June
+select case when company='jaipur' then 'indians' else 'non_indian' end as new_rest,sum(cost) as total_amount  from data_expenses
+where CategoryID=4 and month(date)=6
+group by new_rest
+select * from data_expenses
+select * from categories
+
+SELECT 
+    CASE WHEN company = 'jaipur' THEN 'indians' ELSE 'non_indian' end as new_rest,
+    SUM(cost) AS total_amount
+FROM 
+    data_expenses
+WHERE 
+    CategoryID = 4 AND MONTH(date) = 6
+GROUP BY new_rest;
+
+
+Show the ratio of total spend for restaurants vs grocery for april
+select sum(if(categoryid=4,cost,0))/sum(if(categoryid=2,cost,0))
+from data_expenses
+where month(date)=4
+
+
+what is the average spend per month at inter store
+select * from data_expenses
+select month(date)  as monthly,avg(cost) as avg_cost
+from data_expenses
+where Company='Inter Store'
+group by month(date)
+
+
+ 
+ 	
+which company in shopping category had the highest total cost
+select company,sum(cost) as total_amount
+from data_expenses
+where CategoryID=8
+group by company 
+select* from categories
+
+
+select company,sum(cost) as total_amount
+from data_expenses a
+inner join categories b on a.CategoryID=b.CategoryID and b.category='Shopping'
+
+group by company 
+
+
+Use union clause to show total cost for kebab shop and also panda using two different queries
+
+select company,sum(cost) from data_expenses
+where company='Panda'
+group by company
+
+
+
+union all
+select company,sum(cost) from data_expenses
+where company='Kebab Shop'
+group by company
+
+or 
+select company ,sum(cost) as total_amount from data_expenses
+where company='Kebab Shop' or company='Panda'
+group by company
+
+ 
+ 	
+is there any fully duplicate value in the data
+
+select company,cost
+from data_expenses
+group by company,cost
+having count(*)>1
+
+SELECT*, ROW_NUMBER() OVER(ORDER BY COST ) AS RK
+FROM data_expenses
+SELECT *, ROW_NUMBER() OVER(PARTITION BY COST,COMAPNY,categoryid) as rk
+from data_expenses
+
+select getdate()
