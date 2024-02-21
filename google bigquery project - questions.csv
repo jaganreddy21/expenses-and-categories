@@ -1,0 +1,35 @@
+,
+1,find the unique categories in the data
+2,Show the purchase which had the highest cost
+3,Query to show only first 20 rows of data
+4,show the unique company names where money has been spent
+5,How many unique days has money been spent in each month
+6,For the above question show it in descending order 
+7,"show only data of category id 3,4"
+8,What is highest categoryid of expense in march
+9,Which store had the highest expense in may
+10,Which category had the lowest total number in february
+11,Show the data only where shop name contains the letter w
+12,find a way to get the category based on category ID
+13,Is there any category ID not present in the data table
+14,show categories with expense more than 150 for the month of april
+15,Any patterns in ticket expenses over time
+16,Which restaurant has received the maximum orders based on days
+17,Calculate average spend per day for restaurants
+18,which day of week saw the highest spend in may
+19,calculate total cost for grocery per month and show month in year and month format separated by hyphen
+20,Calculate total spend for shops starting with capital letter R
+21,How many unique companies exist in the shopping category
+22,What is the spending pattern at Rewe monthwise and any insights
+23,Any trends with respect to eating at dominos restaurant
+24,Is there any month where grocery expense is bit different
+25,Show only the company with highest spend in each category for april
+26,calculate % change in total cost for each month & find the month with highest % change
+27,do the same as above question but only for restaurant category
+28,find the date with highest number of unique categories where money was spent
+29,Use case statement to categorise restaurants as Indian vs non indian based on name and show total cost for June
+30,Show the ratio of total spend for restaurants vs grocery for april
+31,what is the average spend per month at inter store
+32,which company in shopping category had the highest total cost
+33,Use union clause to show total cost for kebab shop and also panda using two different queries
+34,is there any fully duplicate value in the data
