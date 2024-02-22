@@ -1,0 +1,54 @@
+select * from feb_data_aditya
+
+1.Which shop have I spent the most money in February
+
+select shop, sum(cost) as total_sum from feb_data_aditya
+where month(date)=2
+group by shop
+order by sum(cost) desc
+ 
+ 	
+4.How many unique shops are there
+
+select count(distinct shop) as shops from feb_data_aditya
+
+2.Show a logic to find the shop with highest expenditure in each type (use rank window function)
+with cte as(
+select 
+    shop,
+	type,
+    cost ,
+    RANK() OVER(PARTITION BY type ORDER BY cost DESC) AS rk
+FROM
+    feb_data_aditya)
+
+select * from cte 
+where rk<=1
+order by cost desc
+
+
+
+
+3.What was the % increase in expenses from 2nd february to 3rd february
+
+	select case
+	sum(when date=2024-02-2 then cost else  0 end) as feb_second,
+	sum(when date=2024-02-13then cost else  0 end) as feb_third
+	from 
+	feb_data_aditya
+
+	WITH expenses AS (
+    SELECT
+        SUM(CASE WHEN date = '2024-02-02' THEN cost ELSE 0 END) AS expenses_2nd_feb,
+        SUM(CASE WHEN date = '2024-02-03' THEN cost ELSE 0 END) AS expenses_3rd_feb
+    FROM
+        feb_data_aditya
+)
+SELECT
+    ((expenses_3rd_feb - expenses_2nd_feb) / expenses_2nd_feb) * 100AS percentage_increase,expenses_2nd_feb,expenses_3rd_feb AS percentage_increase
+FROM
+    expenses;
+
+
+
+	select count(distinct type) from feb_data_aditya
