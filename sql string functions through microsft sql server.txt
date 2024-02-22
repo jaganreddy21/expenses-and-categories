@@ -1,0 +1,281 @@
+select * from employees
+
+select substring(employee_name,1,5) ,employee_name from employees
+select substring(employee_name,8,3),employee_name from employees
+
+select * from data_expenses
+select concat(Date,' ',Company) as new_companies from data_expenses
+SELECT len(employee_name),employee_name from employees
+#left
+select left(employee_name ,len(3)),employee_name from employees
+select left(employee_name ,3),employee_name from employees
+
+
+#char index
+select charindex('l','david') 
+select charindex('l','hello') 
+SELECT CHARINDEX('l', 'hello') AS Position;
+CHARINDEX(substring, string [, start_position])
+select charindex('l','hello',4) # l 
+SELECT CHARINDEX('l', 'hellopsl') AS Position; 
+
+
+charindex('@',Email)
+
+CREATE TABLE Employees2 (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Employees2 (EmployeeID, FirstName, LastName, Email)
+VALUES 
+    (1, 'John', 'Doe', 'john.doe@example.com'),
+    (2, 'John', 'Doe', 'john.doe@example.com'),
+    (3, 'John', 'Doe', 'john.doe@example.com'),
+    (4, 'John', 'Doe', 'john.doe@example.com'),
+    (5, 'John', 'Doe', 'john.doe@example.com'),
+    (6, 'John', 'Doe', 'john.doe@example.com'),
+    (7, 'John', 'Doe', 'john.doe@example.com'),
+    (8, 'John', 'Doe', 'john.doe@example.com'),
+    (9, 'John', 'Doe', 'john.doe@example.com'),
+    (10, 'John', 'Doe', 'john.doe@example.com');
+
+	#domain names @.com,@.zom
+	select * from employees2
+	select charindex('@',Email) from employees2
+	select count(*), right(EMAIL,len(Email)-charindex('@',Email)) from employees2
+	group by  right(EMAIL,len(Email)-charindex('@',Email))
+
+	#split into single column can be divided into two columns
+
+	select * from employees 
+	select left(employee_name,charindex(' ',employee_name)) as last_name,
+	 right(employee_name,len(employee_name)-charindex(' ',employee_name)) as first_name from employees
+
+SELECT CHARINDEX('World', 'Hello World') AS Position;
+-- Output: 7
+select charindex(' ',employee_name),employee_name from employees
+SELECT CHARINDEX('o', 'Hello World', 6) AS Position;
+select charindex('y' ,'happy new year',0) as position
+select charindex('py','happy new year',0) as position
+select charindex('pys','happy new year',0) as new_position #nothing avabile pys 
+select charindex('d' ,employee_name,1),employee_name from employees
+select left(employee_name,charindex('v',employee_name)) as new_employee from employees
+
+select right(employee_name,charindex('h',employee_name,5)) as new_employee from employees
+select charindex(' ',employee_name) as position, left(employee_name,charindex(' ',employee_name)) from employees
+select 
+with cte as(
+select right(employee_name,len(employee_name)-charindex(' ',employee_name)) as employ from employees)
+
+select employ,len(employ) as new_lenght from cte
+select employee_name from employees
+where employee_name like '%v%'
+
+
+#left 
+
+
+select right(employee_name,5),employee_name from employees
+select left(employee_name,charindex(' ',employee_name)) as left_side,right(employee_name,
+len(employee_name)-charindex(' ',employee_name)) as right_side,employee_name from employees
+select
+
+Basic Usage:
+
+select left(employee_name,5) as emp from employees
+
+Extracting First Name:
+select left(employee_name,charindex(' ',employee_name)) as first_name from employees
+
+Extracting First 3 Characters:
+
+
+select left(employee_name,'3') as emp from employees
+
+Extracting Initials from Full Names:
+
+select concat(left(first_name,1),',',left(last_name,1)) as full_name
+from employees
+
+Extracting First Word:
+select left('sql world',charindex(' ','sql world')) as first_word
+select * from employees
+select * from employees
+
+Extracting Prefixes:
+select left ('mr.jagan',charindex('.' ,'mr.jagan')) as prefixes
+
+Extracting Fixed-Length Substring:
+
+select left ('9381358330',4) as my_number
+
+Handling Empty Strings:
+SELECT LEFT('', 3) AS Result;
+
+select * from  data_expenses
+select left(company,3) AS COMPANY FROM data_expenses
+
+select charindex('world','hello world',5) as full_name
+select left(company,charindex(' ',company)) from data_expenses
+select company ,len(company) from data_expenses
+order by len(company) desc
+select * from data_expenses
+select left(company ,charindex(' ',company)) from data_expenses
+
+where Company='Saravanaa Bhavan'
+
+
+#right string
+Extracting Last Name:
+select reverse(company) from data_expenses
+select right('john doe' ,charindex(' ',reverse('john doe')))
+
+Extracting Last 3 Characters:
+select right(company,3) from data_expenses
+
+
+Extracting Last Word:
+select right('chalapathi institute of engineering and technology',charindex(' ',reverse('chalapathi institute of engineering and technology')))
+
+Extracting Suffixes:
+select right(company,5) from data_expenses
+
+Extracting Fixed-Length Substring:
+
+select right('1234567890',4) as phone_number 
+
+Handling Empty Strings:
+
+select right('',3)
+
+Extracting Last Character:
+
+select right('openai',1) 
+
+
+
+
+SELECT TRIM('   Hello World   ') AS TrimmedString;
+
+
+select lower(company) from data_expenses
+select upper(company) from data_expenses
+
+
+Basic Usage - Replace a Substring:
+SELECT REPLACE('Hello World', 'World', 'Universe') AS ReplacedString;
+-- Output: 'Hello Universe'
+
+Replace Characters:
+
+select replace('012-345-6789','-',' ') as replace_characters
+select replace('one two three','one',1)
+select replace(replace('one two three','one',1),1,2)
+
+
+Replace Leading Zeros:
+select replace('0123450890002','0',' ')
+select replace('hello   world',' ','-')
+select substring ('hello world',0,4)
+select replace('hello world','h','p')
+select replace(substring('hello new year',1,9),'h','np')
+select replace('jagan mohan reddy',' ','-') #-
+select replace('jagan mohan reddy',' ','ps') #ps
+
+SELECT REPLACE('Hello   World', ' ', '_') AS ReplacedString;
+-- Output: 'Hello___World'
+
+Basic Usage - Extract Substring:
+
+select substring(company ,1,3) as first_one,substring(company,1,5) as second_one from data_expenses
+select substring(company,charindex(' ',company),len(company)),company ,charindex(' ',company) from data_expenses
+select charindex(' ',company) from data_expenses
+
+select substring('john doe',1,charindex(' ','john doe'))
+
+Extract Last Name:
+select substring('john doe',charindex(' ','john doe'),len('john doe'))
+
+Extract Leading Characters:
+select substring('hello world', 1,5) as charcters
+
+Extract Trailing Characters:
+select substring('hellow world ',5,len('hellow world'))
+
+Extract Middle Characters:
+select substring('hello year',3,6) as new_year
+select len('hello year') as new_line
+
+Extract Fixed-Length Substring:
+
+select substring('1234567890',0,5) as new_numbers
+
+Extract Substring from Date:
+select substring('2022-02-22',2,7) as new_dates
+
+
+
+
+
+
+
+***********************************
+
+select replace('hello world',substring('hello world',7,5),'university') as functions
+select replace(substring('hello world',7,5),'d','university')
+select replace('012-345-6789',substring('012-345-6789',3,5),'56791024536')
+
+Replace Substring with Empty String:
+
+select replace('012-345-6789',substring('012-345-6789',3,5),'')
+select len(012-345)
+
+SELECT REPLACE('Hello World', SUBSTRING('Hello World', CHARINDEX(' ', 'Hello World')+1, LEN('Hello World')), 'Planet') AS ReplacedString;
+-- Output: 'Hello Planet' one space for +1
+select replace('hello world',substring('hello world',charindex(' ','hello world')+1,len('hello world')),'unievrsal_manager')
+
+
+SELECT REPLACE('123-456-789', SUBSTRING('123-456-789', 1, 3), NULL) AS ReplacedString;
+
+select trim('jagan  ')
+select ltrim('   jagan')
+select rtrim('jagan     ')   
+
+select left(substring('hello world',1,4),3)
+select right(substring('jagan mohan reddy',1,10),5)
+
+Nested UPPER and LEFT Functions:
+
+select left(upper('something'),3)
+select upper(left('something',3)) as cte
+
+Nested CONCAT and UPPER Functions:
+
+select concat(upper('jagan'),' ',upper('new_learning')) as full_name
+
+Nested REPLACE and UPPER Functions:
+
+select replace(upper('embarace technology'),'technology','evoultion') as new_line
+
+
+Nested CONCAT and LEN Functions:
+select concat(len('jagan'), ' ',len('sai')) as full_name
+
+Nested LEFT and LEN Functions:
+
+select left('new_year_life ' ,len('new_year_life')-1) as new_life
+select concat(substring('hello world',2,5),' ',substring('new_life',3,6))
+select left('technology essentially our of everyone life that will be grabe once after that no stop you' ,charindex(' ','technology essentially our of everyone life that will be grabe once after that no stop you' ))
+select right('ciet college',charindex(' ',reverse('ciet college')))
+
+select string_agg(distinct employee_name,',') as new_emp from employees
+
+
+select count(*) as count_of_companies ,company,string_agg(company,',') from data_expenses
+
+group by company
+order by count_of_companies desc
+where comapny='Panda
