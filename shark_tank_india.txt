@@ -1,0 +1,73 @@
+select * from shark_tank_india
+
+1.total episodes and total pitches
+
+select count(distinct episode_number) as total_episode,count( distinct pitch_number) as total_pitch_number
+from shark_tank_india
+
+
+2.What is the distribution of deal success rates across episodes
+
+
+
+   select episode_number,(sum(deal)/count(*))*100.0 as success_rate from shark_tank_india
+   group by episode_number
+
+
+  3.What is the average total investment by the sharks in companies, and how does this vary across episodes
+	 select * from shark_tank_india
+	 select episode_number,round(avg(pitcher_ask_amount),2) as total_amount from shark_tank_india
+	 group by episode_number
+   
+
+4. What is the average ask amount by the pitchers who successfully made a deal?
+select round(avg(pitcher_ask_amount),2) as total_pitch_amount  from shark_tank_india
+where deal=1
+
+
+select * from shark_tank_india
+
+5.Which pitcher asked for the highest amount, and was their deal successful?
+ 
+  
+ select pitch_number,pitcher_ask_amount from shark_tank_india
+ where pitcher_ask_amount=(select max(pitcher_ask_amount) from shark_tank_india)
+
+ select * from shark_tank_india
+
+ 6.in which episode highest valuation has asked
+ select episode_number,ask_valuation from shark_tank_india
+ where ask_valuation=(select max(ask_valuation) from shark_tank_india)
+
+
+7.Calculate the success rate of deals with Ashneer Grover
+select * from shark_tank_india
+select count(*) as epsiode_number,sum(case when ashneer_present=1 and deal=1 then 1 else 0 end) as total_sum ,
+round(sum(case when ashneer_deal=1 and deal=1 then 1 else 0 end)/count(*),2) from shark_tank_india
+select 
+8.in which pitch more than 4 sharks invested
+
+ select * from shark_tank_india
+ select pitch_number,total_sharks_invested from shark_tank_india
+	 where total_sharks_invested>4
+
+ 9.  What is the distribution of the presence of Ashneer, Anupam, Aman, Namita, Vineeta, Peyush, and Ghazal during pitching across episodes
+select * from shark_tank_india
+	 select sum(ashneer_present) as total_ashneer_present,
+	 sum(anupam_present) as total_anupam_present,
+	 sum(aman_present) as total_aman,
+	 sum(namita_present) as total_present,
+	 sum(vineeta_present) as total_vineetha,
+	 sum(peyush_present) as total_peyush,
+	 episode_number
+	 from shark_tank_india
+	 group by episode_number
+
+	 
+	 10.  show the count of episodes in which Vineeta signed the deal
+	 select count(distinct episode_number) from shark_tank_india
+	 where vineeta_deal=1
+	 11. What is the distribution of deal success rates across episodes
+	 select episode_number,(sum(deal)/count(*))*100 as succes_rate from shark_tank_india
+	 where deal=1
+	 group by episode_n
