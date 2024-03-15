@@ -1,0 +1,96 @@
+Retrieve all columns for all rows in the dataset:
+
+SELECT * FROM caller_data_chicago; 
+
+List all distinct notice types present in the dataset:
+
+SELECT DISTINCT Notice_Type FROM caller_data_chicago; 
+
+Retrieve the count of hits reported in each year:
+
+SELECT EXTRACT(YEAR FROM Hit_Date) AS Year, COUNT(*) AS Hit_Count FROM caller_data_chicago GROUP BY EXTRACT(YEAR FROM Hit_Date) ORDER BY Year; 
+
+Find the street with the highest number of reported hits:
+
+SELECT Street_Name, COUNT(*) AS Hit_Count FROM caller_data_chicago GROUP BY Street_Name ORDER BY Hit_Count DESC LIMIT 1; 
+
+Display hit reports where the facility hit is 'Gas Pipeline':
+
+SELECT * FROM caller_data_chicago WHERE Facility_Hit = 'Gas Pipeline'; 
+
+Retrieve hit reports where the hit was reported in the year 2022:
+
+SELECT * FROM caller_data_chicago WHERE EXTRACT(YEAR FROM Hit_Date) = 2022; 
+
+List all hit reports reported by a person named 'John Doe':
+
+SELECT * FROM caller_data_chicago WHERE Reported_By_Name = 'John Doe'; 
+
+Display hit reports where the street name starts with 'Main' and ends with 'Street':
+
+SELECT * FROM caller_data_chicago WHERE Street_Name LIKE 'Main%' AND Street_Name LIKE '%Street'; 
+
+Calculate the total count of hit reports for each facility owner:
+
+SELECT Facility_Owner, COUNT(*) AS Hit_Count FROM caller_data_chicago GROUP BY Facility_Owner; 
+
+
+
+SELECT EXTRACT(YEAR FROM Hit_Date) AS Year, EXTRACT(MONTH FROM Hit_Date) AS Month, COUNT(*) AS Hits_Count, AVG(COUNT(*)) OVER () AS Average_Hits_Per_Month FROM caller_data_chicago GROUP BY EXTRACT(YEAR FROM Hit_Date), EXTRACT(MONTH FROM Hit_Date) ORDER BY Year, Month; 
+
+
+
+Determine the month with the highest number of reported hits:
+
+SELECT EXTRACT(YEAR FROM Hit_Date) AS Year, EXTRACT(MONTH FROM Hit_Date) AS Month, COUNT(*) AS Hits_Count FROM caller_data_chicago GROUP BY EXTRACT(YEAR FROM Hit_Date), EXTRACT(MONTH FROM Hit_Date) ORDER BY Hits_Count DESC LIMIT 
+
+List the top 5 streets with the most reported hits:
+
+
+
+SELECT Street_Name, COUNT(*) AS Hits_Count FROM caller_data_chicago GROUP BY Street_Name ORDER BY Hits_Count DESC LIMIT 5; 
+
+Retrieve hit reports along with the related dig ticket numbers:
+
+
+
+SELECT Hit_Report_No, Related_Dig_Ticket FROM caller_data_chicago; 
+
+Display hit reports along with the names of the persons who reported them:
+
+
+
+
+
+
+
+SELECT Hit_Report_No, Reported_By_Name FROM caller_data_chicago; 
+
+List hit reports where the facility owner is 'Electric Company' and the utility name is 'Power Grid':
+
+
+
+SELECT * FROM caller_data_chicago WHERE Facility_Owner = 'Electric Company' AND Utility_Name = 'Power Grid'; 
+
+Identify hit reports where the street address contains the word 'Boulevard':
+
+SELECT * FROM caller_data_chicago WHERE Street_Address LIKE '%Boulevard%'; 
+
+Display hit reports where the hit by name is not provided:
+
+SELECT * FROM caller_data_chicago WHERE Hit_By_Name IS NULL; 
+
+Retrieve hit reports where the street number is between 100 and 200 (inclusive):
+
+
+
+SELECT * FROM caller_data_chicago WHERE Street_Number BETWEEN 100 AND 200; 
+
+List hit reports where the hit date is within the last month:
+
+SELECT * FROM caller_data_chicago WHERE Hit_Date >= dateadd(month,-1,getdate())
+
+Calculate the percentage of hit reports where the facility hit is 'Water Main' out of the total number of hit reports:
+
+SELECT COUNT(CASE WHEN Facility_Hit = 'Water Main' THEN 1 END) * 100.0 / COUNT(*) AS Percentage_Water_Main_Hits FROM caller_data_chicago;
+
